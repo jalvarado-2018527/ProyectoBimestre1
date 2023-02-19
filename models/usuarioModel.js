@@ -1,6 +1,7 @@
 const { Schema, model } = require("mongoose")
 
 const UsuarioSchema = Schema({
+    
     nombre: {
         type: String,
         required: [true, 'el nombre es obligatorio']
@@ -22,7 +23,7 @@ const UsuarioSchema = Schema({
     rol: {
         type: String,
         required: true,
-        enum:['ADMIN_ROLE', 'USER_ROLE']
+        
     },
     estado: {
         type: Boolean,
