@@ -5,21 +5,17 @@ const CategoriaSchema = Schema({
         type: String,
         required: [true, 'el nombre es obligatorio'],
         unique: true
-
     },
-    descripcion: {
-        type: String,
-        required: [true, 'la descripcion es obligatorio']
-    },
-    proveedor: {
-        type: String,
-        required: [true, 'el proveedor es obligatorio']
-    },
-    
     estado: {
         type: Boolean,
-        default: true
-    }
+        default: true,
+        required: true
+    },
+    usuario: {
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario',
+        required: true
+    },
 })
 
 module.exports = model('Categoria', CategoriaSchema)
