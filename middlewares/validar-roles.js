@@ -10,7 +10,7 @@ const esAdminRole = ( req = request, res= response, next ) =>{
         })
     }
     const {rol, nombre} =req.usuario
-    if (rol !== 'PROFESOR_ROL') {
+    if (rol !== 'ADMIN_ROL') {
         return res.status(401).json({
             msg : `${nombre} no es profesor no puede hacer eso`
         })

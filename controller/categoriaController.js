@@ -81,13 +81,12 @@ const putCategoria = async (req = request, res = response) => {
 
 const deleteCategoria = async (req = request, res = response) => {
     const { id } = req.params;
-
-    const eliminarCategoria = await Categoria.findByIdAndDelete(id)
+    const categoriaBorrada = await Categoria.findByIdAndUpdate(id, {estado: false}, {new :true})
 
 
     res.json({
         msg: "api para borrar",
-        eliminarCategoria
+        categoriaBorrada
     })
 }
 

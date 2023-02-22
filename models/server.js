@@ -7,10 +7,10 @@ class Server {
         this.app = express();
         this.port = process.env.PORT;
         this.paths ={
-            categoriaPath : "/api/categorias",
-            usuarioPath :"/api/usuario",
-            productoPath :"/api/producto",
-            authPath : '/api/auth',
+            categoria : "/api/categorias",
+            usuario :"/api/usuario",
+            producto :"/api/producto",
+            auth : '/api/auth',
         }
 
         this.conectarDB();
@@ -40,10 +40,10 @@ class Server {
     }
     
     routes(){
-        this.app.use(this.paths.authPath , require('../routes/auth'))
-        this.app.use(this.paths.categoriaPath , require('../routes/categoriaRutas'))
-        this.app.use(this.paths.usuarioPath , require('../routes/usuarioRutas'))
-        this.app.use(this.paths.productoPath , require('../routes/productoRutas'))
+        this.app.use(this.paths.auth , require('../routes/auth'))
+        this.app.use(this.paths.categoria , require('../routes/categoriaRutas'))
+        this.app.use(this.paths.usuario , require('../routes/usuarioRutas'))
+        this.app.use(this.paths.producto , require('../routes/productoRutas'))
         
     }
 
