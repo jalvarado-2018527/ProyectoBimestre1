@@ -67,11 +67,7 @@ const putCategoria = async (req = request, res = response) => {
     resto.usuario = req.usuario._id
 
     //edicion de categoria 
-
-
     const editarCategoria = await Categoria.findByIdAndUpdate(id, resto,{new:true});
-
-
 
     res.json({
         msg: "api para editar",
@@ -96,5 +92,6 @@ module.exports = {
     postCategoria,
     putCategoria,
     deleteCategoria,
-    getCategoriaId
+    getCategoriaId,
+    
 }

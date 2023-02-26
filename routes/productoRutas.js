@@ -6,15 +6,12 @@ const { validarCampos } = require('../middlewares/validar-campos');
 const { validarJWT } = require('../middlewares/validar-jwt');
 const { esAdminRole } = require('../middlewares/validar-roles');
 
-
 const router = Router();
-
 
 router.get('/mostrar', GetProducto);
 
-
 router.post('/agregar',[
-    validarJWT,
+validarJWT,
     esAdminRole,
     check('nombre','el nombre es obligatorio para agregar').not().isEmpty(),
     check('precio','tienes que colocar un numero para el precio').isNumeric(),

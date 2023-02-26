@@ -8,7 +8,6 @@ const ProductoSchema = Schema({
 
     },
 
-    
 
     precio: {
         type: Number,
@@ -34,8 +33,11 @@ const ProductoSchema = Schema({
         ref: 'Categoria',
         required: true
     },
+  
     descripcion: {
         type: String,},
+
+        
    
 })
 

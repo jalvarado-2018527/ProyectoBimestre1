@@ -13,6 +13,7 @@ const GetProducto = async (req = request, res = response) => {
         Producto.find(query).
         populate('usuario', "nombre").
         populate('categoria', "nombre")
+    
     ])
 
     res.json({

@@ -23,17 +23,18 @@ const UsuarioSchema = Schema({
     rol: {
         type: String,
         required: true,
-        
     },
     estado: {
         type: Boolean,
         default: true,
-      
     },
-    google: {
-        type: Boolean,
-        required: false,
-        
+    carrito :[{
+        type: Schema.Types.ObjectId,
+        ref: 'Producto',
+    }],
+
+    total:{
+        type: Number
     },
 })
 

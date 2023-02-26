@@ -11,6 +11,7 @@ class Server {
             usuario :"/api/usuario",
             producto :"/api/producto",
             auth : '/api/auth',
+            carrito : '/api/carrito'
         }
 
         this.conectarDB();
@@ -44,7 +45,7 @@ class Server {
         this.app.use(this.paths.categoria , require('../routes/categoriaRutas'))
         this.app.use(this.paths.usuario , require('../routes/usuarioRutas'))
         this.app.use(this.paths.producto , require('../routes/productoRutas'))
-        
+        this.app.use(this.paths.carrito , require('../routes/carritoRutas'))
     }
 
 
