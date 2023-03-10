@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { GetProducto, PostProducto, PutProducto, DeleteProducto } = require('../controller/productoController');
+const { GetProducto, PostProducto, PutProducto, DeleteProducto, GetProductoMasVendidos, GetProductoAgotado} = require('../controller/productoController');
 const { idProducto } = require('../helpers/db-validators');
 const { validarCampos } = require('../middlewares/validar-campos');
 const { validarJWT } = require('../middlewares/validar-jwt');
@@ -10,6 +10,10 @@ const {generarFactura, getFacturasUsuario} = require('../controller/facturaContr
 const router = Router();
 
 router.get('/mostrar', GetProducto);
+
+router.get('/vendidos', GetProductoMasVendidos);
+
+router.get('/agotados', GetProductoAgotado);
 
 router.get('/facturas',[validarJWT,], getFacturasUsuario);
 

@@ -38,8 +38,7 @@ const generarFactura = async (req = request, res = response) => {
 
     const total = 0, cartVacio = []
     await Usuario.findByIdAndUpdate({_id:usuarioId},{total :total, carrito: cartVacio }, {new: true}) 
-    .populate("usuario", "-_id  nombre").
-    populate("producto", "-_id nombre precio")
+
 
     res.json({
         msg: 'Gracias por su compra >:D',

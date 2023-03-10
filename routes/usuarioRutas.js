@@ -1,7 +1,8 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 const { PostCarrito } = require('../controller/categoriaController');
-const { getUsuarios, PostUsuarios, PutUsuarios, DeleteUsuarios, putCarrito, putProductoCaritto, VaciarCarrito, getCarrito, PostCliente, borrarCliente,PutCliente } = require('../controller/usarioController');
+const { getUsuarios, PostUsuarios, PutUsuarios, DeleteUsuarios, putCarrito, 
+    putProductoCaritto, VaciarCarrito, getCarrito, PostCliente, borrarCliente,PutCliente } = require('../controller/usarioController');
 const { emailExiste, esRoleValido, existIdOfUser } = require('../helpers/db-validators');
 const { sumarProductos } = require('../middlewares/total-actualizar');
 const { validarCampos } = require('../middlewares/validar-campos');
@@ -62,6 +63,8 @@ router.put('/vaciarCarrito', [
 ], VaciarCarrito);
 
 router.put('/editar/:id', [
+    esAdminRole,
+    validarJWT,
     check('nombre', 'el nombre es obligatorio para agregar').not().isEmpty(),
     check('password', 'el password es obligatorio').not().isEmpty(),
     check('password', 'la contrase;a minimo tienen que ser 6 caracteres').isLength({ min: 6 }),
@@ -70,13 +73,12 @@ router.put('/editar/:id', [
     check('id', "no es un id valido").isMongoId(),
     check('id').custom(existIdOfUser),
     check('correo', 'El correo no es correcto').isEmail(),
-    check('correo').custom(emailExiste),
     validarCampos
 ], PutUsuarios);
-router.put('/editar/:id', [
+router.put('/editarCliente/:id', [
 
     validarCampos
-], PutUsuarios);
+], PutCliente);
 
 router.delete('/delete/:id', [
     validarJWT,

@@ -134,6 +134,8 @@ module.exports = {
     GetProducto,
     DeleteProducto,
     PostProducto,
-    PutProducto
+    PutProducto,
+    GetProductoMasVendidos,
+    GetProductoAgotado
 
 }
