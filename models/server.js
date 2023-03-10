@@ -1,17 +1,17 @@
 const express = require('express')
 const cors = require('cors');
 const { dbConection } = require('../database/config');
-
+const categoria = require('../controller/categoriaController')
 class Server {
     constructor(){
         this.app = express();
         this.port = process.env.PORT;
         this.paths ={
-            categoria : "/api/categorias",
+            categoria : "/api/categoria",
             usuario :"/api/usuario",
             producto :"/api/producto",
             auth : '/api/auth',
-        
+            buscar : '/api/buscar'
         }
 
         this.conectarDB();
@@ -45,13 +45,15 @@ class Server {
         this.app.use(this.paths.categoria , require('../routes/categoriaRutas'))
         this.app.use(this.paths.usuario , require('../routes/usuarioRutas'))
         this.app.use(this.paths.producto , require('../routes/productoRutas'))
-      
+        this.app.use(this.paths.buscar , require('../routes/buscarRutas'))  
     }
 
 
     listen() {
         this.app.listen(this.port, () => {
+            categoria.defaultCategoria()
             console.log(`Example app listening on port ${this.port}`)
+
         })
     }
 }

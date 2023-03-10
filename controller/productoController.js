@@ -6,11 +6,9 @@ const { Promise } = require('mongoose');
 
 const GetProducto = async (req = request, res = response) => {
 
-    const query = {estado: true}
-
     const listaProductos = await Promise.all([
-        Producto.countDocuments(query),
-        Producto.find(query).
+        Producto.countDocuments(),
+        Producto.find().
         populate('usuario', "nombre").
         populate('categoria', "nombre")
     
@@ -23,6 +21,35 @@ const GetProducto = async (req = request, res = response) => {
 
 
 }
+const GetProductoMasVendidos = async(req = request , res = response) =>{
+   
+ 
+    let listaProductos = await Producto.find().sort({stok: 1})
+       
+
+    res.json({
+        msg: 'Productos mas vendidos',
+        listaProductos
+    })
+
+
+}
+const GetProductoAgotado = async(req = request , res = response) =>{
+   
+
+    const query = { stok : 0 };
+     const listaProductos = await Promise.all([
+         Producto.countDocuments(query),
+         Producto.find(query)
+     ])
+ 
+     res.json({
+         msg: 'Productos',
+         listaProductos
+     })
+ 
+ 
+ }
 
 const getProductoId = async (req = request, res = response) => {
 
@@ -68,7 +95,7 @@ const PutProducto = async (req = request, res = response) => {
 
     const { id } = req.params;
 
-    const { _id, estado, usuario, ...data } = req.body;
+    const { _id, usuario, ...data } = req.body;
 
     if (data.nombre) {
         data.nombre = data.nombre.toUpperCase();
@@ -76,9 +103,9 @@ const PutProducto = async (req = request, res = response) => {
 
     data.usuario = req.usuario._id
 
-    //edicion de categoria 
+    //edicion de producto 
 
-    const editarProducto = await Categoria.findByIdAndUpdate(id, resto, { new: true });
+    const editarProducto = await Producto.findByIdAndUpdate(id, data, { new: true });
 
 
 

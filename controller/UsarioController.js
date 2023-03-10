@@ -26,6 +26,27 @@ const PostUsuarios = async (req = request, res = response) => {
     const { nombre, correo, password, rol } = req.body;
     const usuarioDB = new Usuario({ nombre, correo, password, rol });
 
+    const salt = bcryptjs.genSaltSync();
+    usuarioDB.password = bcryptjs.hashSync(password, salt);
+    await usuarioDB.save();
+
+
+
+    res.status(201).json({
+        msg: 'Post api',
+        usuarioDB
+    })
+
+}
+
+const PostCliente = async (req = request, res = response) => {
+ 
+     req.body.rol = "CLIENT"
+   
+
+    const { nombre, correo, password, rol } = req.body;
+    const usuarioDB = new Usuario({ nombre, correo, password, rol });
+
 
     const salt = bcryptjs.genSaltSync();
     usuarioDB.password = bcryptjs.hashSync(password, salt);
@@ -39,6 +60,51 @@ const PostUsuarios = async (req = request, res = response) => {
     })
 
 }
+const borrarCliente = async(req = request, res = response) => {
+    const {id} = req.params;
+   
+    const usuario = req.usuario._id;
+
+    const idUsuario = usuario.toString();
+
+    if(id === idUsuario){
+        const usuarioEliminado = await Usuario.findByIdAndDelete(id);
+        res.status(200).json({
+            msg: 'usuario borrado',
+            usuarioEliminado
+        })
+    }else{
+        res.status(401).json({
+            msg: 'no puedes borrar cuentas de alguien mas'
+
+        })
+    }
+    
+}
+
+const PutCliente = async (req = request, res = response) => {
+    const {id} = req.params;
+    const usuario = req.usuario._id;
+    const idUsuario = usuario.toString();
+
+    if (id === idUsuario) {
+        const {_id, role,...resto} = req.body;
+        const salt = bcryptjs.genSaltSync();
+        resto.password = bcryptjs.hashSync(resto.password, salt);
+        const usuarioEditado = await Usuario.findByIdAndUpdate(id, resto, {new: true});
+        res.status(200).json({
+            msg: 'usuario actualizado',
+            usuarioEditado
+        })
+    } else{
+        res.status(401).json({
+            msg: 'solo puedes borrar tu usuario'
+
+        })
+    }
+
+}
+
 
 
 
@@ -201,6 +267,8 @@ const putProductoCaritto = async (req = request, res = response) => {
         })
     }
 
+    
+
 module.exports = {
 
     getUsuarios,
@@ -210,6 +278,9 @@ module.exports = {
     putCarrito,
     putProductoCaritto,
     VaciarCarrito,
-    getCarrito
+    getCarrito,
+    PostCliente,
+    borrarCliente,
+     PutCliente
 
 }

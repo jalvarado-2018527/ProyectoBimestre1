@@ -14,11 +14,6 @@ const ProductoSchema = Schema({
         required: [true, 'la descripcion es obligatorio']
     },
 
-    estado: {
-        type: Boolean,
-        default: true
-    },
-
     stok: {
         type: Number,
         required: [true, 'el stock es obligatorio']

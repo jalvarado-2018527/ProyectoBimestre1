@@ -1,6 +1,7 @@
 const { response, request } = require('express');
 
 const Categoria = require('../models/categoriaModel');
+const Producto = require('../models/productoModel');
 const { Promise } = require('mongoose');
 
 const getCategoria = async (req = request, res = response) => {
@@ -76,14 +77,35 @@ const putCategoria = async (req = request, res = response) => {
 }
 
 const deleteCategoria = async (req = request, res = response) => {
+    
     const { id } = req.params;
-    const categoriaBorrada = await Categoria.findByIdAndUpdate(id, {estado: false}, {new :true})
-
+    let defaultCategoria = await Categoria.findOne({nombre: 'Default'});
+    if(defaultCategoria._id == id) return res.send({message: 'Default categoria '});
+    
+    let udateproducto = await Producto.updateMany(
+        {categoria: id}, 
+        {categoria: defaultCategoria._id }
+    );
+    console.log(udateproducto)
+    let deleteCategoria = await Categoria.findOneAndDelete({_id: id});
 
     res.json({
         msg: "api para borrar",
-        categoriaBorrada
+        deleteCategoria
     })
+}
+const defaultCategoria = async(req = request, res = response) =>{
+
+    let data = {
+        nombre: 'Default',
+        descripcion: 'Default categoria',
+        usuario:  ""
+    }
+    let existeCategoria = await Categoria.findOne({nombre: 'Default'});
+    if(existeCategoria) return console.log('Default category already createad');
+    let defCategoria = new Categoria(data);
+    await defCategoria.save();
+    return console.log('Default category created');
 }
 
 
@@ -93,5 +115,6 @@ module.exports = {
     putCategoria,
     deleteCategoria,
     getCategoriaId,
+    defaultCategoria
     
 }

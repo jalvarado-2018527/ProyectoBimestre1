@@ -5,10 +5,17 @@ const { idProducto } = require('../helpers/db-validators');
 const { validarCampos } = require('../middlewares/validar-campos');
 const { validarJWT } = require('../middlewares/validar-jwt');
 const { esAdminRole } = require('../middlewares/validar-roles');
+const {generarFactura, getFacturasUsuario} = require('../controller/facturaController')
 
 const router = Router();
 
 router.get('/mostrar', GetProducto);
+
+router.get('/facturas',[validarJWT,], getFacturasUsuario);
+
+router.post('/comprar', [
+    validarJWT,
+], generarFactura);
 
 router.post('/agregar',[
 validarJWT,
